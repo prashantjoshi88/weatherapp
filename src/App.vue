@@ -27,14 +27,7 @@
 
       </div>
       
-      <div class="weather-box" >
-        <div class="temp-search">
-          Seacrch for Weather
-        </div>
-        <div class="temp-search-sm">
-          Seacrch for Weather
-        </div>
-      </div>
+      
     </div>
   </div>
 </template>
