@@ -14,12 +14,12 @@
 
  
 
-      <div class="location-box " v-if="weather.name">
+      <div class="location-box " v-if="weather">
       <div class="location" > {{ weather.name }}, {{ weather.country }} </div>
       <div class="date">{{ dateBuilder() }}</div>
     
       </div>
-      <div class="weather-box" v-if="temp.temp_c">
+      <div class="weather-box" v-if="temp">
          <div class="temp"> {{ (temp.temp_c) }}°c</div> <br>
          <div class="weather">Weather: {{ capitalizeFirstLetter(climate) }}</div>
          <div class="weather-sm"> {{ capitalizeFirstLetter(climate) }}</div>
@@ -196,7 +196,8 @@ body {
   /* background-image: url('./assets/rainy.jpg'); */
 }
 #app.fog{
-  background-image: url('./assets/fog.jpeg');
+  background-image: url('https://source.unsplash.com/random/1170x800/?fog-weather');
+  /* background-image: url('./assets/fog.jpeg'); */
 }
 #app.mist{
   background-image: url('https://source.unsplash.com/random/1170x800/?mist-weather');
