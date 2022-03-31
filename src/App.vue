@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="this.climate ?  this.weth.filter(e => climate.includes(e))   : ''  ">
+  <div id="app" :class="climate ?  weth.filter(e => climate.includes(e))   : ''  ">
     <div class="main">
       <div class="search-box">
         <input 
@@ -10,7 +10,7 @@
           @keypress="fetchWeather"
         />
       </div >
-    <span class="err" v-if="this.message">{{message}}</span>
+    <span class="err" v-if="message">{{message}}</span>
 
  
 
