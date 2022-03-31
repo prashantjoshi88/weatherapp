@@ -49,7 +49,7 @@ export default {
   data () {
     return {
       api_key: 'ce837410e43f4d7ab78101905221902',
-      url_base: "http://api.weatherapi.com/v1/current.json",
+      url_base: "https://api.weatherapi.com/v1/current.json",
       // weather_icon: "http://openweathermap.org/img/wn/",
       query: '',
       weather: {},
@@ -90,7 +90,7 @@ export default {
          this.long = position.coords.longitude
          console.log(position);
          axios.get(
-         "http://api.weatherapi.com/v1/current.json?q=" +
+         "https://api.weatherapi.com/v1/current.json?q=" +
          this.lat +
          "," +
          this.long +
