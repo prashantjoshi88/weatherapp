@@ -14,12 +14,12 @@
 
  
 
-      <div class="location-box " v-if="weather">
-      <div class="location" > {{ weather.name }}, {{ weather.country }} </div>
+      <div class="location-box " >
+      <div class="location" > {{ wname }}, {{ wcountry }} </div>
       <div class="date">{{ dateBuilder() }}</div>
     
       </div>
-      <div class="weather-box" v-if="temp">
+      <div class="weather-box" >
          <div class="temp"> {{ (temp.temp_c) }}°c</div> <br>
          <div class="weather">Weather: {{ capitalizeFirstLetter(climate) }}</div>
          <div class="weather-sm"> {{ capitalizeFirstLetter(climate) }}</div>
@@ -27,7 +27,7 @@
 
       </div>
       
-      <div class="weather-box" v-else>
+      <div class="weather-box" >
         <div class="temp-search">
           Seacrch for Weather
         </div>
@@ -52,6 +52,8 @@ export default {
       url_base: "https://api.weatherapi.com/v1/current.json",
       // weather_icon: "http://openweathermap.org/img/wn/",
       query: '',
+      wname: '',
+      wcountry:'',
       weather: {},
       temp:{},
       message : '',
@@ -97,6 +99,8 @@ export default {
          "&key=ce837410e43f4d7ab78101905221902"
         ).then((response) =>{
            this.weather = response.data.location;
+           this.wname = this.weather.name
+        this.wcountry = this.weather.country
         this.temp = response.data.current;
         this.climate = response.data.current.condition.text;
         this.climate = this.climate.toLowerCase() ;
@@ -122,14 +126,15 @@ export default {
           )
           .then((response) => {
         this.weather = response.data.location;
+        this.wname = this.weather.name
+        this.wcountry = this.weather.country
+        console.log(this.wname);
         this.temp = response.data.current;
         this.climate = response.data.current.condition.text;
         this.climate = this.climate.toLowerCase() ;
         console.log(response.data);
         console.log(this.climate);
         this.message = null;
-        
-        
       }).then(this.setResults).catch(() =>{
       //  alert('please type a correct city name')
          this.message = 'Please type a Correct City Name'
