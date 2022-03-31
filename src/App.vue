@@ -41,7 +41,7 @@
 
 
 <script>
-import '@morioh/v-msg/dist/msg.min.css';
+
 
 import axios from 'axios'
 export default {
