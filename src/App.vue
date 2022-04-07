@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="climate"
-    id="app"
-    :class="climate ? weth.filter((e) => climate.includes(e)) : ''"
-  >
+  <div id="app" :class="climate ? weth.filter((e) => climate.includes(e)) : ''">
     <div class="main">
       <div class="search-box">
         <input
@@ -13,27 +9,27 @@
           v-model="query"
           @keypress="fetchWeather"
         />
-        <ul>
-          <li
-            v-for="item in suggestions"
-            :key="item.place_id"
-            v-text="item.description"
-          />
-        </ul>
       </div>
-      <div class="location-box">
-        <div class="location">{{ wname }}, {{ wcountry }}</div>
-        <div class="date">{{ dateBuilder() }}</div>
-      </div>
-      <div class="weather-box">
-        <div class="temp">{{ temp.temp_c }}°c</div>
-        <br />
-        <div class="weather">Weather: {{ capitalizeFirstLetter(climate) }}</div>
-        <div class="weather-sm">{{ capitalizeFirstLetter(climate) }}</div>
-        <div>
-          <img :src="logo" alt />
+
+      <div v-if="climate">
+        <div class="location-box">
+          <div class="location">{{ wname }}, {{ wcountry }}</div>
+          <div class="date">{{ dateBuilder() }}</div>
+        </div>
+        <div class="weather-box">
+          <div class="temp">{{ temp.temp_c }}°c</div>
+          <br />
+          <div class="weather">
+            Weather: {{ capitalizeFirstLetter(climate) }}
+          </div>
+          <div class="weather-sm">{{ capitalizeFirstLetter(climate) }}</div>
+          <div>
+            <img :src="logo" alt />
+          </div>
         </div>
       </div>
+      <div v-else class="location">Search for Weather..</div>
+      <q-btn round color="black" @click="current" icon="my_location" />
     </div>
   </div>
 </template>
@@ -74,34 +70,6 @@ export default defineComponent({
     };
   },
 
-  mounted() {
-    Loading.show({
-      spinner: QSpinnerGears,
-      message: "fetching weather...",
-      messageColor: "white",
-    });
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position.coords.latitude);
-        this.lat = position.coords.latitude;
-        console.log(position.coords.longitude);
-        this.long = position.coords.longitude;
-        console.log(position);
-        axios
-          .get(
-            `${this.url_base}?q=${this.lat},${this.long}&key=${this.api_key}`
-          )
-          .then((response) => {
-            this.rsp(response);
-            Loading.hide();
-          });
-      },
-      (error) => {
-        console.log(error.message);
-      }
-    );
-  },
-
   methods: {
     fetchWeather(e) {
       if (e.key == "Enter") {
@@ -122,7 +90,33 @@ export default defineComponent({
           });
       }
     },
-
+    current() {
+      Loading.show({
+        spinner: QSpinnerGears,
+        message: "fetching weather...",
+        messageColor: "white",
+      });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position.coords.latitude);
+          this.lat = position.coords.latitude;
+          console.log(position.coords.longitude);
+          this.long = position.coords.longitude;
+          console.log(position);
+          axios
+            .get(
+              `${this.url_base}?q=${this.lat},${this.long}&key=${this.api_key}`
+            )
+            .then((response) => {
+              this.rsp(response);
+              Loading.hide();
+            });
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
+    },
     setResults(results) {
       this.weather = results;
     },
